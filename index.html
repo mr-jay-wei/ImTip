@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>输入法状态提示</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <div class="container max-w-3xl mx-auto py-12 px-4">
+    <header class="mb-10">
+      <h1 class="text-3xl font-bold mb-3">输入法状态提示器</h1>
+      <p class="text-gray-600">在光标位置显示当前输入法状态与全/半角模式</p>
+      <div class="h-px bg-gray-200 mt-6"></div>
+    </header>
+
+    <main>
+      <div class="mb-10">
+        <h2 class="text-xl font-semibold mb-4">模拟输入环境</h2>
+        <div class="border border-gray-200 rounded-md mb-4 overflow-hidden">
+          <div class="bg-gray-50 px-4 py-2 border-b border-gray-200 flex items-center">
+            <span class="text-xs font-geist-mono text-gray-500">文档.txt - 记事本</span>
+          </div>
+          <div class="p-4 bg-white">
+            <textarea id="input-area" class="w-full h-40 p-3 border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-gray-400 resize-none font-geist-mono" placeholder="点击此处开始输入..."></textarea>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <button id="toggle-language" class="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages"><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg>
+            切换语言 (当前: 中文)
+          </button>
+          <button id="toggle-width" class="px-4 py-2 bg-gray-100 text-gray-800 rounded hover:bg-gray-200 transition-colors flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" x2="15" y1="20" y2="20"></line><line x1="12" x2="12" y1="4" y2="20"></line></svg>
+            切换全/半角 (当前: 半角)
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-md p-6">
+        <h2 class="text-xl font-semibold mb-4">功能说明</h2>
+        <div class="prose prose-gray">
+          <p class="text-gray-600 mb-4">
+            此演示模拟了一个在 Windows 系统上的输入法状态提示功能：
+          </p>
+          <ul class="list-disc pl-5 text-gray-600 space-y-2 mb-4">
+            <li>当用户在文本框中输入时，会在光标附近弹出一个小提示框</li>
+            <li>提示框显示当前输入法状态（中文/英文）以及字符宽度模式（全角/半角）</li>
+            <li>提示框会在输入停止几秒后自动消失</li>
+            <li>可以通过上方按钮切换输入语言和字符宽度模式</li>
+          </ul>
+          <p class="text-gray-600">
+            在实际应用中，此功能可以帮助用户快速识别当前输入状态，避免输入错误，提高工作效率。
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 输入法状态提示框 (初始隐藏) -->
+  <div id="ime-indicator" class="fixed hidden opacity-0 shadow-sm rounded border border-gray-100 bg-white px-3 py-2 transition-all duration-300 z-50">
+    <div class="flex items-center gap-2">
+      <span id="lang-icon" class="ime-icon"></span>
+      <span id="lang-text" class="text-xs font-medium"></span>
+      <span class="text-gray-300 mx-0.5">|</span>
+      <span id="width-text" class="text-xs text-gray-600"></span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // 防止页面缩放
+    window.addEventListener("wheel", (e)=> {
+      const isPinching = e.ctrlKey
+      if(isPinching) e.preventDefault()
+    }, { passive: false })
+  </script>
+</body>
+</html>
